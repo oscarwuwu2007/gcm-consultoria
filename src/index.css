@@ -1,0 +1,406 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --color-brand: #87c244;
+  --color-brand-deep: #4e7d1e;
+  --color-brand-pale: #e3f1d2;
+  --color-brand-ink: #2f4c12;
+
+  --color-ink: #4d4e50;
+  --color-ink-soft: #74786f;
+  --color-line: #e6e9e2;
+  --color-canvas: #f3f4f1;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+@theme {
+  --color-forest: #0e1a09;
+  --color-forest-soft: #172a0e;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 45s linear infinite;
+}
+
+.marquee-track-reverse {
+  animation: marquee 55s linear infinite reverse;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track-reverse {
+    animation: none;
+  }
+}
+
+@utility fade-l {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+}
+
+@utility fade-r {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 45%);
+}
+
+@utility fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 70%, transparent 100%);
+}
+
+@utility fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+
+@utility fade-lb {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%), linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 45%), linear-gradient(to bottom, #000 70%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+@utility fade-rb {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to bottom, #000 70%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(135, 194, 68, 0.6);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #4e7d1e #0e1a09;
+}
+
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0e1a09;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#87c244, #4e7d1e);
+    border-radius: 999px;
+    border: 3px solid #0e1a09;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--intro, 0s) + var(--d, 0s));
+}
+.rise-1 { --d: 0.1s; }
+.rise-2 { --d: 0.25s; }
+.rise-3 { --d: 0.4s; }
+.rise-4 { --d: 0.6s; }
+
+@keyframes introLeaf {
+  from {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.intro-leaf {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: introLeaf 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--d);
+}
+
+@keyframes introText {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.intro-text {
+  opacity: 0;
+  animation: introText 0.8s ease-out 0.9s forwards;
+}
+
+@keyframes introBar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.intro-bar {
+  transform-origin: left;
+  animation: introBar 1.5s cubic-bezier(0.6, 0, 0.2, 1) 0.2s both;
+}
+
+@keyframes curtain {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.intro-curtain {
+  animation: curtain 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.8s forwards;
+}
+
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes spin-a {
+  to {
+    --a: 360deg;
+  }
+}
+
+.credit-border {
+  background: conic-gradient(
+    from var(--a),
+    rgba(135, 194, 68, 0.1) 0%,
+    rgba(135, 194, 68, 0.1) 60%,
+    #87c244 80%,
+    #e3f1d2 86%,
+    rgba(135, 194, 68, 0.1) 93%
+  );
+  animation: spin-a 6s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-130%) skewX(-20deg);
+  }
+  55%,
+  100% {
+    transform: translateX(330%) skewX(-20deg);
+  }
+}
+
+.credit-shine {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: shine 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .intro-leaf,
+  .intro-text,
+  .intro-bar,
+  .credit-border,
+  .credit-shine {
+    animation: none;
+    opacity: 1;
+  }
+  .intro-curtain {
+    display: none;
+  }
+}
+
+@keyframes kenburns {
+  to {
+    transform: scale(1.1) translate(-2%, -1.5%);
+  }
+}
+
+.kenburns {
+  animation: kenburns 22s ease-in-out 2.2s infinite alternate;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 50s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kenburns,
+  .spin-slow {
+    animation: none;
+  }
+}
+
+/* Vision: round icon between the two headline lines (wise.com style) */
+.vision-icon {
+  opacity: 0;
+  transform: scale(0.2) rotate(-180deg);
+}
+.vision-icon-on {
+  animation:
+    vision-icon-pop 800ms cubic-bezier(0.22, 1, 0.36, 1) 450ms forwards,
+    vision-icon-flip 4.5s cubic-bezier(0.65, 0, 0.35, 1) 1.8s infinite;
+}
+@keyframes vision-icon-pop {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+@keyframes vision-icon-flip {
+  0%,
+  55% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.12) rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vision-icon {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+}
+
+/* Shared button system: fill sweep on hover, lift, press and focus ring */
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    color 0.3s ease;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-hover);
+  transform: translateY(101%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+  color: var(--btn-hover-fg);
+}
+.btn:hover::before {
+  transform: translateY(0);
+}
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 3px;
+}
+.btn-brand {
+  background: var(--color-brand);
+  color: var(--color-forest);
+  --btn-hover: #ffffff;
+  --btn-hover-fg: var(--color-forest);
+}
+.btn-deep {
+  background: var(--color-brand-deep);
+  color: #ffffff;
+  --btn-hover: var(--color-forest);
+  --btn-hover-fg: #ffffff;
+}
+.btn > .btn-arrow {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn:hover > .btn-arrow {
+  transform: translateX(5px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::before,
+  .btn > .btn-arrow {
+    transition: none;
+  }
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* Gentle drift for small decorative corner graphics */
+.deco-float {
+  animation: deco-float 7s ease-in-out infinite;
+}
+@keyframes deco-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(4deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deco-float {
+    animation: none;
+  }
+}
