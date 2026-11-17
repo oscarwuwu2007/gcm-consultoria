@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import visionImg from "../assets/vision.webp"
 import { LogoIcon } from "./Logo"
+import { SectionTitle } from "./ui/SectionTitle"
 
 /**
  * wise.com "Everyday, everywhere" style, in normal page flow (nothing slides
@@ -30,15 +31,13 @@ export function Vision() {
     return () => io.disconnect()
   }, [])
 
-  const line =
-    "block whitespace-nowrap text-[8.5vw] font-extrabold uppercase leading-[0.95] tracking-tighter text-white sm:text-7xl lg:text-[7rem]"
   const ease = "cubic-bezier(0.22, 1, 0.36, 1)"
 
   return (
     <section
       ref={ref}
       id="vision"
-      aria-label="Visión: la primera opción en Centroamérica"
+      aria-label="Visión"
       className="relative h-screen min-h-[34rem] overflow-hidden bg-white"
     >
       {/* Photo card that opens to full bleed */}
@@ -86,34 +85,21 @@ export function Vision() {
           transition: `opacity 500ms ease ${open ? "350ms" : "0ms"}`,
         }}
       >
-        <p className="mb-6 text-sm font-semibold uppercase tracking-[0.25em] text-white/85">
-          Visión
-        </p>
-        <h2 className="flex flex-col items-center" aria-hidden="true">
-          <span className={line}>La primera opción</span>
-          <span
-            className={`vision-icon relative z-10 -my-3 flex h-14 w-14 items-center justify-center rounded-full bg-brand sm:-my-5 sm:h-20 sm:w-20 ${
-              open ? "vision-icon-on" : ""
-            }`}
-          >
-            <LogoIcon className="h-7 w-auto sm:h-10" fill="#0e1a09" />
-          </span>
-          <span className={line}>en Centroamérica</span>
-        </h2>
-        <p className="sr-only">La primera opción en Centroamérica</p>
-        <p className="mx-auto mt-8 max-w-md text-base font-medium leading-relaxed text-white/85 sm:text-lg">
-          Para quien toma en serio su organización y su gente.
-        </p>
-        <a
-          href="#contacto"
-          tabIndex={open ? 0 : -1}
-          className="mt-8 btn btn-brand h-14 px-9 text-base"
+        <span
+          aria-hidden="true"
+          className={`vision-icon relative z-10 mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-brand sm:h-20 sm:w-20 ${
+            open ? "vision-icon-on" : ""
+          }`}
         >
-          Agenda una consulta
-          <svg viewBox="0 0 24 24" className="btn-arrow h-5 w-5" fill="none" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-        </a>
+          <LogoIcon className="h-7 w-auto sm:h-10" fill="#0e1a09" />
+        </span>
+        <SectionTitle
+          title="VISIÓN"
+          size="xl"
+          tone="dark"
+          lead="Transformar la gestión del talento humano siendo el puente de confianza entre personas talentosas y empresas comprometidas con su desarrollo."
+          className="flex flex-col items-center [&_p]:mx-auto"
+        />
       </div>
     </section>
   )

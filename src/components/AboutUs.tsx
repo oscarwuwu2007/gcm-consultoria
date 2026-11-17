@@ -1,33 +1,8 @@
 import aboutImg from "../assets/about.webp"
 import { Link } from "../router"
-import { Reveal, WordReveal, ZoomFrame } from "./Reveal"
-
-const TRAITS = [
-  {
-    title: "Trato directo",
-    body: "Hablamos con quien decide, sin intermediarios ni vueltas.",
-    icon: ["M7.9 20A9 9 0 1 0 4 16.1L2 22Z"],
-  },
-  {
-    title: "Resultados medibles",
-    body: "Cada proyecto arranca con metas claras y un responsable.",
-    icon: [
-      "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z",
-      "M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z",
-      "M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z",
-    ],
-  },
-  {
-    title: "Gente primero",
-    body: "La estructura se diseña pensando en las personas que la viven.",
-    icon: [
-      "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",
-      "M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z",
-      "M22 21v-2a4 4 0 0 0-3-3.87",
-      "M16 3.13a4 4 0 0 1 0 7.75",
-    ],
-  },
-]
+import { Reveal, ZoomFrame } from "./Reveal"
+import { SectionTitle } from "./ui/SectionTitle"
+import { BODY, TONES } from "./ui/typography"
 
 export function AboutUs() {
   return (
@@ -35,20 +10,15 @@ export function AboutUs() {
       <div className="mx-auto max-w-6xl">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
-            <Reveal>
-              <p className="mb-6 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-brand-deep">
-                <span className="h-px w-10 bg-brand-deep" />
-                Quiénes somos
-              </p>
-            </Reveal>
-            <WordReveal
-              text="Ordenamos empresas. Conectamos personas."
-              className="text-4xl font-extrabold leading-[1.08] tracking-tight text-brand-ink sm:text-5xl lg:text-[3.4rem]"
+            <SectionTitle
+              title="Quiénes somos"
+              lead="Acompañamos la evolución de su negocio aportando nuestra sólida trayectoria en la Gestión de Recursos Humanos."
             />
             <Reveal delay={350}>
-              <p className="mt-7 max-w-lg text-lg font-medium leading-relaxed text-ink-soft">
-                Somos una consultora costarricense. Entramos a su empresa, ordenamos lo que está
-                enredado y le ayudamos a contratar a la gente correcta.
+              <p className={`mt-4 max-w-lg ${BODY} ${TONES.light.body}`}>
+                Nos convertimos en una extensión de su equipo para optimizar la gestión empresarial,
+                brindándoles la calidad, cercanía y soluciones especializadas que su organización
+                necesita para seguir creciendo.
               </p>
             </Reveal>
             <Reveal delay={500}>
@@ -78,26 +48,6 @@ export function AboutUs() {
             />
           </div>
         </div>
-
-        <ul className="mt-16 grid gap-5 sm:mt-20 md:grid-cols-3">
-          {TRAITS.map((t, i) => (
-            <li key={t.title}>
-              <Reveal delay={i * 120} className="h-full">
-                <div className="h-full rounded-3xl border border-line bg-canvas p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:bg-white hover:shadow-[0_18px_40px_rgba(47,76,18,0.12)]">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-pale text-brand-deep">
-                    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden="true">
-                      {t.icon.map((d) => (
-                        <path key={d} d={d} stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-                      ))}
-                    </svg>
-                  </span>
-                  <p className="mt-5 text-xl font-extrabold tracking-tight text-brand-ink">{t.title}</p>
-                  <p className="mt-2 text-base font-medium leading-relaxed text-ink-soft">{t.body}</p>
-                </div>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   )

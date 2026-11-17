@@ -1,6 +1,7 @@
 import missionImg from "../assets/mission.webp"
 import { Fragments } from "./decorative/Decorative"
-import { GrowBar, Reveal, WordReveal, ZoomFrame } from "./Reveal"
+import { Reveal, ZoomFrame } from "./Reveal"
+import { SectionTitle } from "./ui/SectionTitle"
 
 export function Mission() {
   return (
@@ -18,24 +19,17 @@ export function Mission() {
         <div>
           <Reveal>
             <div className="mb-6 flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.2em] text-brand">
-              <span>01</span>
               <span className="h-px w-16 bg-brand/50" />
               <span>Por qué existimos</span>
             </div>
           </Reveal>
-          <WordReveal
-            text="MISIÓN"
-            className="text-[18vw] font-extrabold uppercase leading-[0.9] tracking-tighter text-white sm:text-8xl lg:text-[8.5rem]"
+          <SectionTitle
+            title="MISIÓN"
+            size="xl"
+            tone="dark"
+            bar
+            lead="Impulsar el crecimiento de las organizaciones a través de una gestión humana cercana, ética y especializada."
           />
-          <div className="mt-7">
-            <GrowBar delay={500} tone="bg-brand" />
-          </div>
-          <Reveal delay={300}>
-            <p className="mt-7 max-w-sm text-base font-medium leading-relaxed text-white/75">
-              Diseñar estructuras y equipos que permitan a las empresas crecer
-              sin perder el control.
-            </p>
-          </Reveal>
         </div>
 
         <div className="relative mb-6 mr-5 lg:mr-0">

@@ -1,16 +1,30 @@
 import { useEffect, useRef, useState } from "react"
 import { useInView } from "../hooks/useInView"
 import { Link } from "../router"
-import { LeafFragment } from "./decorative/Decorative"
-import { Reveal, WordReveal } from "./Reveal"
+import { SectionTitle } from "./ui/SectionTitle"
 
-const MILESTONES = [
-  { year: "2010", title: "Nace GCM", body: "Abrimos con una idea simple: ordenar empresas costarricenses." },
-  { year: "2013", title: "Estructura y procesos", body: "Primeros proyectos completos de estructura organizacional." },
-  { year: "2016", title: "Capacitación", body: "Sumamos formación para los equipos que ya habíamos ordenado." },
-  { year: "2019", title: "Reclutamiento", body: "Lanzamos la bolsa de empleo para conectar empresas y talento." },
-  { year: "2022", title: "Más allá de Costa Rica", body: "Empezamos a atender empresas de la región." },
-  { year: "Hoy", title: "16 años", body: "Seguimos con el mismo trato directo del primer día." },
+const MILESTONES: { year: string; title?: string; body: string }[] = [
+  {
+    year: "2009",
+    title: "Nace GCM",
+    body: "Con la idea de proporcionar a las empresas servicios en Desarrollo Organizacional, basados en la experiencia profesional de más de 17 años de su fundadora.",
+  },
+  {
+    year: "2012",
+    body: "Se incorporan servicios de capacitación y consultoría en diversas especialidades con profesionales de alta trayectoria.",
+  },
+  {
+    year: "2018",
+    body: "Se consolidan los servicios de Organización y Logística de Eventos Corporativos y Congresos.",
+  },
+  {
+    year: "2023",
+    body: "Se consolida el método de trabajo especializado para conectar a personas talentosas con empresas que valoran el potencial humano.",
+  },
+  {
+    year: "2026",
+    body: "Innovando para impulsar el crecimiento de las organizaciones a través de una gestión humana cercana, ética, tecnológica y especializada.",
+  },
 ]
 
 function Item({ year, title, body, index }: (typeof MILESTONES)[number] & { index: number }) {
@@ -31,7 +45,7 @@ function Item({ year, title, body, index }: (typeof MILESTONES)[number] & { inde
         } ${inView ? "translate-x-0 opacity-100" : `opacity-0 ${left ? "md:-translate-x-12" : "md:translate-x-12"} translate-y-8 md:translate-y-0`}`}
       >
         <p className="text-4xl font-extrabold tracking-tight text-brand sm:text-7xl">{year}</p>
-        <h3 className="mt-2 text-xl font-bold text-white sm:mt-3 sm:text-3xl">{title}</h3>
+        {title && <h3 className="mt-2 text-xl font-bold text-white sm:mt-3 sm:text-3xl">{title}</h3>}
         <p className={`mt-2 max-w-sm text-sm sm:mt-3 sm:text-base font-medium leading-relaxed text-white/70 ${left ? "md:ml-auto" : ""}`}>
           {body}
         </p>
@@ -82,16 +96,7 @@ export function History() {
     >
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center sm:mb-20">
-          <Reveal>
-            <p className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-brand">
-              <LeafFragment className="h-4 w-auto" />
-              Nuestra historia
-            </p>
-          </Reveal>
-          <WordReveal
-            text="Así hemos crecido."
-            className="text-5xl font-extrabold leading-[1.02] tracking-tight text-white sm:text-7xl"
-          />
+          <SectionTitle title="Nuestra historia" tone="dark" className="flex flex-col items-center text-center" />
         </div>
 
         <div className="relative">

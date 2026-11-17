@@ -1,31 +1,47 @@
 import { useEffect, useState } from "react"
 import { Link } from "../router"
+import { openContact } from "./ui/contact"
+import { CAPACITACION, CONSULTORIA, type ServicePageData } from "../content/servicios"
 import { Logo } from "./Logo"
 
-type NavItem = { label: string; href: string; children?: { label: string; href: string }[] }
+type NavChild = { label: string; href: string }
+type NavItem = { label: string; href: string; children?: NavChild[] }
 
-const opts = (href: string, n = 3) =>
-  Array.from({ length: n }, (_, i) => ({ label: `Opción ${i + 1}`, href }))
+const sub = (page: ServicePageData): NavChild[] =>
+  page.services.map((x) => ({ label: x.title, href: `${page.path}/${x.id}` }))
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Inicio", href: "/#inicio" },
   { label: "Quiénes somos", href: "/#quienes-somos" },
-  { label: "Consultoría", href: "/consultoria", children: opts("/consultoria", 4) },
-  { label: "Capacitación", href: "/capacitacion", children: opts("/capacitacion", 4) },
-  { label: "Bolsa de empleo", href: "/bolsa-empleo", children: opts("/bolsa-empleo", 3) },
+  { label: "Consultoría", href: CONSULTORIA.path, children: sub(CONSULTORIA) },
+  { label: "Capacitación", href: CAPACITACION.path, children: sub(CAPACITACION) },
+  { label: "Bolsa de empleo", href: "/bolsa-empleo" },
 ]
 
-const CTA = { label: "Contáctenos", href: "#contacto" }
+// En esta página la mitad derecha es blanca: el menú se muestra siempre como barra blanca.
+const SOLID_PATH = "/contacto"
+
+const CTA = { label: "Contáctenos" }
+
+// Vive fuera del componente: al navegar, la página se vuelve a armar y el Header se recrea,
+// pero el mouse sigue encima del menú; así el submenú no reaparece hasta que el mouse salga.
+let lastClosedMenu: string | null = null
 
 export function Header({ path = "/" }: { path?: string }) {
   const [open, setOpen] = useState(false)
   const [expanded, setExpanded] = useState<string | null>(null)
+  // Submenú de escritorio cerrado tras elegir una opción (se reabre al salir y volver a entrar con el mouse).
+  const [closedMenu, setClosedMenuState] = useState<string | null>(lastClosedMenu)
+  const setClosedMenu = (v: string | null) => {
+    lastClosedMenu = v
+    setClosedMenuState(v)
+  }
   const [scrolled, setScrolled] = useState(false)
   const [section, setSection] = useState<"home" | "about" | null>(path === "/" ? "home" : null)
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 24)
+      setScrolled(window.scrollY > 24 || path === SOLID_PATH)
       if (path !== "/") {
         setSection(null)
         return
@@ -81,7 +97,7 @@ export function Header({ path = "/" }: { path?: string }) {
         <nav aria-label="Principal" className="hidden xl:block">
           <ul className="flex items-center gap-1 text-[15px]">
             {NAV_ITEMS.map((item) => (
-              <li key={item.label} className="group relative">
+              <li key={item.label} className="group relative" onMouseLeave={() => setClosedMenu(null)}>
                 <Link
                   to={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
@@ -103,14 +119,16 @@ export function Header({ path = "/" }: { path?: string }) {
                   )}
                 </Link>
                 {item.children && (
-                  <div className="invisible absolute left-0 top-full z-30 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                    <ul className="min-w-[13rem] rounded-2xl bg-white p-2 shadow-[0_18px_40px_rgba(0,0,0,0.22)]">
+                  <div className={`${closedMenu === item.label ? "invisible! opacity-0!" : ""} invisible absolute left-1/2 top-full z-30 w-max min-w-[15rem] max-w-[22rem] -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100`}>
+                    <ul className="rounded-2xl bg-white p-1.5 shadow-[0_16px_40px_rgba(0,0,0,0.2)]">
                       {item.children.map((c) => (
                         <li key={c.label}>
                           <Link
                             to={c.href}
                             onClick={(e) => {
                               if (path === c.href) e.preventDefault()
+                              setClosedMenu(item.label)
+                              e.currentTarget.blur()
                             }}
                             className="block rounded-xl px-4 py-2.5 text-[15px] font-medium text-ink transition-colors hover:bg-brand-pale hover:text-brand-ink"
                           >
@@ -127,9 +145,9 @@ export function Header({ path = "/" }: { path?: string }) {
         </nav>
 
         <div className="hidden xl:block">
-          <a href={CTA.href} className={ctaClass}>
+          <button type="button" onClick={openContact} className={ctaClass}>
             {CTA.label}
-          </a>
+          </button>
         </div>
 
         <button
@@ -215,13 +233,16 @@ export function Header({ path = "/" }: { path?: string }) {
               </li>
             ))}
             <li className="mt-1">
-              <a
-                href={CTA.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-2xl bg-brand px-5 py-3 text-center font-bold text-forest"
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false)
+                  openContact()
+                }}
+                className="block w-full rounded-2xl bg-brand px-5 py-3 text-center font-bold text-forest"
               >
                 {CTA.label}
-              </a>
+              </button>
             </li>
           </ul>
         </nav>

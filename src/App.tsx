@@ -1,12 +1,14 @@
 import { AboutUs } from "./components/AboutUs"
 import { Clients } from "./components/Clients"
+import { ContactPage } from "./components/ContactPage"
 import { Footer } from "./components/Footer"
 import { Header } from "./components/Header"
 import { Hero } from "./components/Hero"
 import { Intro } from "./components/Intro"
 import { ScrollProgress } from "./components/ScrollProgress"
 import { History } from "./components/History"
-import { LEGAL_DOCS, LegalPage } from "./components/LegalPage"
+import { ServiceDetail, ServicePage } from "./components/ServicePage"
+import { SERVICE_PAGES, findServiceDetail } from "./content/servicios"
 import { Mission } from "./components/Mission"
 import { Vision } from "./components/Vision"
 import { Years } from "./components/Years"
@@ -22,7 +24,7 @@ function App() {
         <Intro />
       <ScrollProgress />
       <Header path={path} />
-        <main>
+        <main key={path} className="page-enter">
           <History />
         </main>
         <Footer />
@@ -30,14 +32,42 @@ function App() {
     )
   }
 
-  if (path in LEGAL_DOCS) {
+  if (path === "/contacto") {
     return (
       <>
         <Intro />
-      <ScrollProgress />
-      <Header path={path} />
-        <main>
-          <LegalPage path={path} />
+        <ScrollProgress />
+        <Header path={path} />
+        <main key={path} className="page-enter">
+          <ContactPage />
+        </main>
+      </>
+    )
+  }
+
+  const detail = findServiceDetail(path)
+  if (detail) {
+    return (
+      <>
+        <Intro />
+        <ScrollProgress />
+        <Header path={path} />
+        <main key={path} className="page-enter">
+          <ServiceDetail data={detail.page} id={detail.id} />
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
+  if (path in SERVICE_PAGES) {
+    return (
+      <>
+        <Intro />
+        <ScrollProgress />
+        <Header path={path} />
+        <main key={path} className="page-enter">
+          <ServicePage data={SERVICE_PAGES[path]} />
         </main>
         <Footer />
       </>
@@ -54,9 +84,9 @@ function App() {
         <Years />
         <div className="relative z-10">
           <AboutUs />
-          <Clients />
           <Mission />
           <Vision />
+          <Clients />
         </div>
       </main>
       <Footer />

@@ -5,7 +5,7 @@ import { Reveal } from "./Reveal"
 export function Years() {
   return (
     <section
-      aria-label="16 años de trayectoria"
+      aria-label="Más de 17 años de trayectoria"
       className="relative z-10 overflow-hidden rounded-t-[2.5rem] bg-brand-deep shadow-[0_-24px_60px_rgba(0,0,0,0.35)]"
     >
       <Fragments
@@ -28,13 +28,13 @@ export function Years() {
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-center px-4 pt-12 sm:px-6 sm:pt-20 lg:min-h-screen lg:py-20">
         <Reveal>
         <p className="select-none text-[24vw] font-extrabold uppercase leading-[0.85] tracking-tighter text-white sm:text-[18vw] lg:text-[9.5rem]">
-          16 años
+          +17 años
         </p>
         </Reveal>
         <Reveal delay={150}>
-        <p className="mt-5 max-w-xs text-xl font-semibold leading-snug text-white/90 sm:mt-8 md:text-2xl">
-          16 años ayudando a empresas costarricenses a definir su estructura y
-          a contratar mejor.
+        <p className="mt-5 max-w-sm text-xl font-semibold leading-snug text-white/90 sm:mt-8 md:text-2xl">
+          Colaborando con empresas costarricenses a gestionar y desarrollar
+          estrategias de Talento Humano.
         </p>
         </Reveal>
       </div>
