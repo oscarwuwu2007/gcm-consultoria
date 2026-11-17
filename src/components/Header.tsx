@@ -1,27 +1,12 @@
 import { useEffect, useState } from "react"
 import { Link } from "../router"
 import { openContact } from "./ui/contact"
-import { CAPACITACION, CONSULTORIA, type ServicePageData } from "../content/servicios"
+import { NAV_CTA as CTA, NAV_ITEMS } from "../content/nav"
 import { Logo } from "./Logo"
-
-type NavChild = { label: string; href: string; short?: string }
-type NavItem = { label: string; href: string; children?: NavChild[] }
-
-const sub = (page: ServicePageData): NavChild[] =>
-  page.services.map((x) => ({ label: x.title, href: `${page.path}/${x.id}`, short: x.short }))
-
-const NAV_ITEMS: NavItem[] = [
-  { label: "Inicio", href: "/#inicio" },
-  { label: "Quiénes somos", href: "/#quienes-somos" },
-  { label: "Consultoría", href: CONSULTORIA.path, children: sub(CONSULTORIA) },
-  { label: "Capacitación", href: CAPACITACION.path, children: sub(CAPACITACION) },
-  { label: "Bolsa de empleo", href: "/bolsa-empleo" },
-]
+import { MobileMenu } from "./MobileMenu"
 
 // En esta página la mitad derecha es blanca: el menú se muestra siempre como barra blanca.
 const SOLID_PATH = "/contacto"
-
-const CTA = { label: "Contáctenos" }
 
 // Vive fuera del componente: al navegar, la página se vuelve a armar y el Header se recrea,
 // pero el mouse sigue encima del menú; así el submenú no reaparece hasta que el mouse salga.
@@ -29,7 +14,6 @@ let lastClosedMenu: string | null = null
 
 export function Header({ path = "/" }: { path?: string }) {
   const [open, setOpen] = useState(false)
-  const [expanded, setExpanded] = useState<string | null>(null)
   // Submenú de escritorio cerrado tras elegir una opción (se reabre al salir y volver a entrar con el mouse).
   const [closedMenu, setClosedMenuState] = useState<string | null>(lastClosedMenu)
   const setClosedMenu = (v: string | null) => {
@@ -78,6 +62,7 @@ export function Header({ path = "/" }: { path?: string }) {
   }`
 
   return (
+    <>
     <div
       className={`rise rise-1 fixed inset-x-0 top-0 z-50 px-4 transition-[padding] duration-500 sm:px-8 ${
         scrolled ? "pt-3 sm:pt-4" : "pt-5 sm:pt-7"
@@ -174,86 +159,8 @@ export function Header({ path = "/" }: { path?: string }) {
         </button>
       </header>
 
-      {open && (
-        <nav
-          aria-label="Principal móvil"
-          className="relative z-20 mx-auto mt-4 max-h-[calc(100svh-6.5rem)] max-w-7xl overflow-y-auto overscroll-contain rounded-3xl border border-white/10 bg-forest-soft p-3 xl:hidden"
-        >
-          <ul className="flex flex-col gap-1 text-[15px]">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label}>
-                <div className="flex items-center">
-                  <Link
-                    to={item.href}
-                    onClick={() => setOpen(false)}
-                    className={`flex-1 rounded-2xl px-5 py-3 ${
-                      isActive(item.href)
-                        ? "bg-white/10 font-semibold text-brand"
-                        : "font-medium text-white/80"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <button
-                      type="button"
-                      onClick={() => setExpanded((v) => (v === item.label ? null : item.label))}
-                      aria-expanded={expanded === item.label}
-                      aria-label={`Opciones de ${item.label}`}
-                      className="ml-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white/70 active:bg-white/10"
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className={`h-5 w-5 transition-transform duration-300 ${expanded === item.label ? "rotate-180" : ""}`}
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-                {item.children && (
-                  <div
-                    className="grid transition-[grid-template-rows] duration-300 ease-out"
-                    style={{ gridTemplateRows: expanded === item.label ? "1fr" : "0fr" }}
-                  >
-                    <ul className="mb-1 ml-5 overflow-hidden border-l border-white/15 pl-3">
-                      {item.children.map((c) => (
-                        <li key={c.label}>
-                          <Link
-                            to={c.href}
-                            onClick={(e) => {
-                              if (path === c.href) e.preventDefault()
-                              setOpen(false)
-                            }}
-                            tabIndex={expanded === item.label ? 0 : -1}
-                            className="block rounded-xl px-4 py-2.5 text-sm font-medium text-white/65"
-                          >
-                            {c.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </li>
-            ))}
-            <li className="mt-1">
-              <button
-                type="button"
-                onClick={() => {
-                  setOpen(false)
-                  openContact()
-                }}
-                className="block w-full rounded-2xl bg-brand px-5 py-3 text-center font-bold text-forest"
-              >
-                {CTA.label}
-              </button>
-            </li>
-          </ul>
-        </nav>
-      )}
     </div>
+    <MobileMenu open={open} path={path} isActive={isActive} onClose={() => setOpen(false)} />
+    </>
   )
 }
