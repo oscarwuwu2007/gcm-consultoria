@@ -456,19 +456,3 @@ html {
     transform: scale(1.06);
   }
 }
-
-/* Rama que crece con el scroll: cada hoja brota al pasar su tramo. */
-.vine-leaf {
-  opacity: 0;
-  transform: scale(0.2);
-  transition: opacity 400ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.vine-leaf.leaf-on {
-  opacity: 1;
-  transform: scale(1);
-}
-@media (prefers-reduced-motion: reduce) {
-  .vine-leaf {
-    transition: none;
-  }
-}
