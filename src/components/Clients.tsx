@@ -1,5 +1,7 @@
 import { Reveal } from "./Reveal"
+import { CAPACITACION, CONSULTORIA } from "../content/servicios"
 import { SectionTitle } from "./ui/SectionTitle"
+import { Stats } from "./ui/Stats"
 
 /**
  * Para agregar un cliente: copie su logo (png, jpg, webp o svg) a
@@ -23,6 +25,16 @@ export function Clients() {
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         <SectionTitle title="Nuestros clientes" bar />
+
+        <div className="mt-8 sm:mt-10">
+          <Stats
+            items={[
+              { value: 17, prefix: "+", label: "años de trayectoria" },
+              { value: LOGOS.length, label: "clientes" },
+              { value: CONSULTORIA.services.length + CAPACITACION.services.length, label: "áreas de servicio" },
+            ]}
+          />
+        </div>
 
         <ul className="mt-10 grid grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-4 lg:grid-cols-5">
           {LOGOS.map(({ n, src, name }) => (
