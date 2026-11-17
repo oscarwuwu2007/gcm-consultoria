@@ -4,7 +4,8 @@
  */
 export type ServiceGroup = { title?: string; items: string[] }
 /** logos: ids de src/assets/certificaciones/<id>.png que se muestran en la página del servicio. */
-export type Service = { id: string; title: string; intro?: string; logos?: { id: string; name: string }[]; groups: ServiceGroup[] }
+/** short: una línea para el menú (qué incluye). */
+export type Service = { id: string; title: string; short?: string; intro?: string; logos?: { id: string; name: string }[]; groups: ServiceGroup[] }
 export type ServicePageData = { path: string; title: string; lead: string; services: Service[] }
 
 export const CONSULTORIA: ServicePageData = {
@@ -14,6 +15,7 @@ export const CONSULTORIA: ServicePageData = {
   services: [
     {
       id: "reclutamiento",
+      short: "Entrevistas, pruebas y candidatos",
       title: "Reclutamiento y selección",
       intro:
         "Nuestro servicio de reclutamiento y selección está diseñado para ayudarle a encontrar a los mejores talentos que se ajusten perfectamente a las necesidades de su empresa.",
@@ -29,6 +31,7 @@ export const CONSULTORIA: ServicePageData = {
     },
     {
       id: "coaching",
+      short: "Acompañamiento individual al personal",
       title: "Coaching personal empresarial",
       intro: "Sesiones individuales de acompañamiento a los colaboradores en situaciones como:",
       groups: [
@@ -46,6 +49,7 @@ export const CONSULTORIA: ServicePageData = {
     },
     {
       id: "relaciones-laborales",
+      short: "Manuales, conflictos y compensación",
       title: "Relaciones laborales y compensación",
       groups: [
         {
@@ -69,6 +73,7 @@ export const CONSULTORIA: ServicePageData = {
     },
     {
       id: "clima-cultura",
+      short: "Evaluaciones y estrategias de cultura",
       title: "Clima y cultura organizacional",
       intro:
         "Diagnosticar, mejorar y mantener un ambiente laboral saludable y alineado a los valores corporativos.",
@@ -85,6 +90,7 @@ export const CONSULTORIA: ServicePageData = {
     },
     {
       id: "manuales-puestos",
+      short: "Funciones, requisitos y competencias",
       title: "Manuales descriptivos de puestos",
       intro:
         "Definir de manera clara y estructurada las funciones, responsabilidades, requisitos y competencias asociadas a cada puesto dentro de la organización, permitiendo una gestión más eficiente del talento humano.",
@@ -103,6 +109,7 @@ export const CONSULTORIA: ServicePageData = {
     },
     {
       id: "seguridad-laboral",
+      short: "Prevención, riesgos y brigadas",
       title: "Seguridad laboral",
       intro:
         "Programas y acciones diseñadas para promover, proteger y mantener la salud de los trabajadores en su entorno laboral; para prevenir accidentes y enfermedades relacionadas con el trabajo, asegurando un ambiente laboral seguro y saludable.",
@@ -132,6 +139,7 @@ export const CAPACITACION: ServicePageData = {
   services: [
     {
       id: "mejores-practicas",
+      short: "ITIL, PMI, Scrum, ISO y más",
       title: "Mejores prácticas",
       groups: [
         {
@@ -163,6 +171,7 @@ export const CAPACITACION: ServicePageData = {
     },
     {
       id: "cursos-talleres",
+      short: "Habilidades blandas y realidad virtual",
       title: "Cursos y talleres",
       groups: [
         {
@@ -204,6 +213,7 @@ export const CAPACITACION: ServicePageData = {
     },
     {
       id: "certificaciones",
+      short: "ISTQB, IREB y TMMi",
       title: "Certificaciones",
       logos: [
         { id: "istqb", name: "ISTQB" },
@@ -231,6 +241,7 @@ export const CAPACITACION: ServicePageData = {
     },
     {
       id: "microcertificaciones",
+      short: "Videojuegos e IA, modalidad virtual",
       title: "Microcertificaciones",
       groups: [
         {

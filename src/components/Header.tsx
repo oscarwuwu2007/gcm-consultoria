@@ -4,11 +4,11 @@ import { openContact } from "./ui/contact"
 import { CAPACITACION, CONSULTORIA, type ServicePageData } from "../content/servicios"
 import { Logo } from "./Logo"
 
-type NavChild = { label: string; href: string }
+type NavChild = { label: string; href: string; short?: string }
 type NavItem = { label: string; href: string; children?: NavChild[] }
 
 const sub = (page: ServicePageData): NavChild[] =>
-  page.services.map((x) => ({ label: x.title, href: `${page.path}/${x.id}` }))
+  page.services.map((x) => ({ label: x.title, href: `${page.path}/${x.id}`, short: x.short }))
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Inicio", href: "/#inicio" },
@@ -119,23 +119,30 @@ export function Header({ path = "/" }: { path?: string }) {
                   )}
                 </Link>
                 {item.children && (
-                  <div className={`${closedMenu === item.label ? "invisible! opacity-0!" : ""} invisible absolute left-1/2 top-full z-30 w-max min-w-[15rem] max-w-[22rem] -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100`}>
+                  <div className={`${closedMenu === item.label ? "invisible! opacity-0!" : ""} invisible absolute left-1/2 top-full z-30 w-max min-w-[17rem] max-w-[24rem] -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100`}>
                     <ul className="rounded-2xl bg-white p-1.5 shadow-[0_16px_40px_rgba(0,0,0,0.2)]">
-                      {item.children.map((c) => (
-                        <li key={c.label}>
-                          <Link
-                            to={c.href}
-                            onClick={(e) => {
-                              if (path === c.href) e.preventDefault()
-                              setClosedMenu(item.label)
-                              e.currentTarget.blur()
-                            }}
-                            className="block rounded-xl px-4 py-2.5 text-[15px] font-medium text-ink transition-colors hover:bg-brand-pale hover:text-brand-ink"
-                          >
-                            {c.label}
-                          </Link>
-                        </li>
-                      ))}
+                      {item.children.map((c) => {
+                        const here = path === c.href
+                        return (
+                          <li key={c.label}>
+                            <Link
+                              to={c.href}
+                              aria-current={here ? "page" : undefined}
+                              onClick={(e) => {
+                                if (here) e.preventDefault()
+                                setClosedMenu(item.label)
+                                e.currentTarget.blur()
+                              }}
+                              className={`block rounded-xl px-4 py-2.5 transition-colors hover:bg-brand-pale ${here ? "bg-brand-pale" : ""}`}
+                            >
+                              <span className="block text-[15px] font-semibold leading-snug text-brand-ink">{c.label}</span>
+                              {c.short && (
+                                <span className="mt-0.5 block text-[13px] font-medium leading-snug text-ink-soft">{c.short}</span>
+                              )}
+                            </Link>
+                          </li>
+                        )
+                      })}
                     </ul>
                   </div>
                 )}
