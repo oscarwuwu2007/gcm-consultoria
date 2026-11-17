@@ -19,7 +19,7 @@ export function Clients() {
   return (
     <section
       id="clientes"
-      className="flex min-h-screen items-center overflow-hidden bg-white py-16 sm:py-24"
+      className="flex min-h-screen items-center overflow-hidden bg-white py-16 [contain-intrinsic-size:auto_900px] [content-visibility:auto] sm:py-24"
     >
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         <SectionTitle title="Nuestros clientes" bar />

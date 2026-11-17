@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import missionImg from "../assets/mission.webp"
 import yearsImg from "../assets/years.webp"
-import docsImg from "../assets/hero-manos-docs.jpg"
-import meetingImg from "../assets/hero-manos-reunion.jpg"
+import docsImg from "../assets/hero-manos-docs.webp"
+import meetingImg from "../assets/hero-manos-reunion.webp"
 
 const SLIDES = [
   { src: missionImg, pos: "50% 55%", label: "Manos firmando y revisando documentos" },
@@ -39,13 +39,8 @@ export function Hero() {
           loading={i === 0 ? "eager" : "lazy"}
           decoding="async"
           aria-hidden={i !== slide}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{
-            objectPosition: s.pos,
-            opacity: i === slide ? 1 : 0,
-            transform: i === slide ? "scale(1.06)" : "scale(1)",
-            transition: "opacity 1200ms ease, transform 7000ms linear",
-          }}
+          className={`hero-slide absolute inset-0 h-full w-full object-cover ${i === slide ? "is-on" : ""}`}
+          style={{ objectPosition: s.pos }}
         />
       ))}
       <div

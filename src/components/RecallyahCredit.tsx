@@ -1,4 +1,4 @@
-import recallyahLogo from "../assets/recallyah-logo.png"
+import recallyahLogo from "../assets/recallyah-logo.webp"
 
 export function RecallyahCredit() {
   return (
